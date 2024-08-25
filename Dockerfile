@@ -1,5 +1,5 @@
 # Build app
-FROM python:3.9-slim AS backend
+FROM python:3.10-slim AS backend
 
 # Set working directory for backend
 WORKDIR ./app
