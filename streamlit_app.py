@@ -25,10 +25,21 @@ def get_iam_token(api_key):
 # Get tax strategy from IBM Watsonx.ai API
 def get_tax_strategy(data, iam_token):
     body = {
-        "input": f"Generate a personalized tax-saving strategy for a user based on their financial profile.\n\nInput:\nCountry: {data['country']}\nEarnings: {data['earnings']}\nTax: {data['tax']}\nInvestment: {data['investment']}\nDeductions: {data['deductions']}\n\nOutput:",
+        "input": f"""
+            Generate a personalized tax-saving strategy for a user based on their financial profile. 
+            Assume the numbers to be in Local Currency.
+            Input:  
+                Country: {data['country']}
+                Earnings: {data['earnings']}
+                Tax: {data['tax']}
+                Investment: {data['investment']}
+                Deductions: {data['deductions']}
+
+            Respond with a structured tax-saving strategy for the user. The output should be well formatted and easy to understand.
+        """,
         "parameters": {
             "decoding_method": "greedy",
-            "max_new_tokens": 200,
+            "max_new_tokens": 500,
             "repetition_penalty": 1,
         },
         "model_id": "ibm/granite-13b-chat-v2",
@@ -62,15 +73,21 @@ def display_form():
     # Form Fields
     country = st.sidebar.text_input("Country", "India")
     earnings = st.sidebar.slider(
-        "Monthly Earnings (INR)", min_value=0, max_value=1000000, value=5000, step=500
+        "Monthly Earnings (Local Currency)",
+        min_value=0,
+        max_value=1000000,
+        value=5000,
+        step=500,
     )
     tax = st.sidebar.slider(
         "Current Tax Rate (%)", min_value=0, max_value=100, value=30, step=1
     )
     investment = st.sidebar.number_input(
-        "Monthly Investments (INR)", min_value=0, step=100
+        "Monthly Investments (Local Currency)", min_value=0, step=100
     )
-    deductions = st.sidebar.number_input("Deductions (INR)", min_value=0, step=100)
+    deductions = st.sidebar.number_input(
+        "Deductions (Local Currency)", min_value=0, step=100
+    )
     additional_info = st.sidebar.text_area("Additional Information")
 
     if st.sidebar.button("Submit"):
