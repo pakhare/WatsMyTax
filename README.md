@@ -1,85 +1,57 @@
 <!-- PROJECT TITLE -->
-  <h1 align="center">WatsAI</h1>
- <div id="header" align="center">
+<h1 align="center">WatsAI</h1>
+<div id="header" align="center">
 </div>
 <h2 align="center">
  Description
 </h2>
-<p align="center"> <strong>Introducing WatsAI:</strong>
-   DESCRIPTION </p>
+<p align="center"><strong>Introducing WatsAI:</strong>
+   WatsAI is a powerful tax optimization tool designed to help individuals maximize their tax savings by providing personalized strategies based on their financial information. With an intuitive user interface, WatsAI simplifies the process of optimizing tax liability, making it accessible to users across various financial backgrounds.</p>
 
 ## Table of Contents
 
 <details>
 <summary>WatsAI</summary>
-  
+
 - [Application Description](#application-description)
 - [Table of Contents](#table-of-contents)
-- [Contributing](#contributing)
+- [Try the App](#try-the-app)
+- [Technology Stack](#technology-stack)
+- [Features](#features)
 - [Authors](#authors)
 - [License](#license)
 
 </details>
 
-## TRY the prototype
-[WatsAI](https://aitaxoptimizer.streamlit.app/)
+## Try the App
 
+[WatsAI](https://aitaxoptimizer.streamlit.app/)
 
 ## Technology Stack
 
-| Technology | Description                 |
-| ---------- | --------------------------- |
-| Python     | Programming Language        |
-| Docker     | Containerization            |
-| IBM watsonx.ai    | generative AI solution |
-|Streamlit| an open-source Python framework |
+| Technology   | Description                                      |
+| ------------ | ------------------------------------------------ |
+| Streamlit    | Open-source app framework for data science       |
+| Python       | Programming language used for backend processing |
+| Pandas       | Data manipulation and analysis library           |
+| NumPy        | Fundamental package for scientific computing     |
+| HTML/CSS     | For structuring and styling the app's interface   |
 
 ## Features
 
-- Feature1:<br> WatsAI text here
-- TFeature2:<br> WatsAI text here
-- Feature3:<br> WatsAI text here
-- Feature4:<br> WatsAI text here
-  
-1. Install the requirements
-
-   ```
-   $ pip install -r requirements.txt
-   ```
-
-2. Run the app
-
-   ```
-   $ streamlit run streamlit_app.py
-   ```
-
-
-### How to run it on your own machine
-
-1. Install the requirements
-
-   ```
-   $ pip install -r requirements.txt
-   ```
-
-2. Run the app
-
-   ```
-   $ streamlit run streamlit_app.py
-
-
+- **Personalized Tax-Saving Strategy**:<br> WatsAI generates tailored tax-saving strategies based on user input, optimizing tax liability.
+- **User-Friendly Interface**:<br> Input fields allow users to easily provide information such as earnings, tax rates, and investments, making tax optimization accessible.
+- **Real-Time Feedback**:<br> The app offers immediate feedback and recommendations to help users maximize their tax savings.
+- **Cross-Platform Compatibility**:<br> WatsAI is designed to work seamlessly across different devices, ensuring accessibility and ease of use.
 
 ## Authors
 
-| Name           | Link                                      |
-| -------------- | ----------------------------------------- |
-| Sandra Ashipala | [GitHub](https://github.com/sandramsc) |
+| Name               | Link                                      |
+| ------------------ | ----------------------------------------- |
+| Sandra Ashipala     | [GitHub](https://github.com/sandramsc) |
 | Hoang Nguyen Van | [GitHub](https://github.com/hoangnv170752) |
-| NAME | [GitHub](https://github.com/name) |
-| NAME | [GitHub](https://github.com/name) |
-
 
 ## License
 
-[![GitLicense](https://img.shields.io/badge/License-MIT-lime.svg)](https://github.com/sandramsc/WatsAI/blob/main/LICENSE)
-   ```
+[![GitLicense](https://img.shields.io/badge/License-MIT-lime.svg)](https://github.com/yourusername/WatsAI/blob/main/LICENSE) <!-- Update link with your repo -->
+
