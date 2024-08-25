@@ -1,5 +1,6 @@
 import requests
 import streamlit as st
+from country_list import countries_for_language
 
 # IBM IAM Token Endpoint and Watsonx.ai API details
 IAM_TOKEN_URL = "https://iam.cloud.ibm.com/identity/token"
@@ -70,8 +71,12 @@ def display_form():
 
     st.sidebar.header("User Information")
 
+    # Get the list of countries
+    countries = [country[1] for country in countries_for_language('en')]
+
+
     # Form Fields
-    country = st.sidebar.text_input("Country", "India")
+    country = st.sidebar.selectbox("Country", countries)
     earnings = st.sidebar.slider(
         "Monthly Earnings (Local Currency)",
         min_value=0,
