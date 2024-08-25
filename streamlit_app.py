@@ -1,4 +1,3 @@
-# streamlit_app.py
 import streamlit as st
 import requests
 
@@ -21,7 +20,7 @@ def get_iam_token(api_key):
 # Get tax strategy from IBM Watsonx.ai API
 def get_tax_strategy(data, iam_token):
     body = {
-        "input": f"Generate a personalized tax-saving strategy for a user based on their financial profile.\n\nInput:\nCountry: {data['country']}\nEarnings: {data['earnings']}\nTax: {data['tax']}\n\nOutput:",
+        "input": f"Generate a personalized tax-saving strategy for a user based on their financial profile.\n\nInput:\nCountry: {data['country']}\nEarnings: {data['earnings']}\nTax: {data['tax']}\nInvestment: {data['investment']}\nDeductions: {data['deductions']}\n\nOutput:",
         "parameters": {
             "decoding_method": "greedy",
             "max_new_tokens": 200,
@@ -40,34 +39,34 @@ def get_tax_strategy(data, iam_token):
         st.error("Error fetching data from the API")
         return None
 
-    # Parse the response JSON
     response_json = response.json()
-
-    # Extract the 'generated_text' from the 'results' list
     results = response_json.get("results", [])
     if results:
         return results[0].get("generated_text", "No strategy found")
     return "No strategy found"
 
 def display_form():
-    st.title("Tax Optimization Strategy")
+    st.title("🧾 Tax Optimization Strategy 🏦")
 
     # Read API Key from Streamlit secrets
     api_key = st.secrets["api"]["key"]
 
-    country = st.text_input("Country", "India")
-    earnings = st.number_input("Monthly Earnings (INR)", min_value=0)
-    tax = st.number_input("Current Tax Rate (%)", min_value=0, max_value=100)
+    st.sidebar.header("User Information")
 
-    # Add more fields as needed based on the questions
-    # ...
+    # Form Fields
+    country = st.sidebar.text_input("Country", "India")
+    earnings = st.sidebar.slider("Monthly Earnings (INR)", min_value=0, max_value=1000000, value=5000, step=500)
+    tax = st.sidebar.slider("Current Tax Rate (%)", min_value=0, max_value=100, value=30, step=1)
+    investment = st.sidebar.number_input("Monthly Investments (INR)", min_value=0, step=100)
+    deductions = st.sidebar.number_input("Deductions (INR)", min_value=0, step=100)
 
-    if st.button("Submit"):
+    if st.sidebar.button("Submit"):
         data = {
             "country": country,
             "earnings": earnings,
             "tax": tax,
-            # Include other form data here
+            "investment": investment,
+            "deductions": deductions
         }
         iam_token = get_iam_token(api_key)
         if iam_token:
