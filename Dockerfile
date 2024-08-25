@@ -5,7 +5,7 @@ FROM python:3.9-slim AS backend
 WORKDIR ./app
 
 # Install backend dependencies
-COPY requirements.txt
+COPY requirements.txt /app
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Bundle app source
