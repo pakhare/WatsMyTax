@@ -21,7 +21,7 @@ def get_tax_strategy(data):
     headers = {
         "Accept": "application/json",
         "Content-Type": "application/json",
-        "Authorization": f"Bearer {API_KEY}"
+        "Authorization": f"Bearer sKeQGQ6IsYI1kxERE12cLtXPGFN4Sn461TFTR75xkcym"
     }
     response = requests.post(API_URL, headers=headers, json=body)
     if response.status_code != 200:
