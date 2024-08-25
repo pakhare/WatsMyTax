@@ -74,7 +74,7 @@
 | Name           | Link                                      |
 | -------------- | ----------------------------------------- |
 | Sandra Ashipala | [GitHub](https://github.com/sandramsc) |
-| NAME | [GitHub](https://github.com/name) |
+| Hoang Nguyen Van | [GitHub](https://github.com/hoangnv170752) |
 | NAME | [GitHub](https://github.com/name) |
 | NAME | [GitHub](https://github.com/name) |
 

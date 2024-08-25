@@ -36,7 +36,7 @@ def get_tax_strategy(data, iam_token):
                 Investment: {data['investment']}
                 Deductions: {data['deductions']}
 
-            Respond with a structured tax-saving strategy for the user. The text output should be well formatted and easy to understand.
+            Respond with a structured tax-saving strategy for the user. The text output should contain the country currency, the calculation between before & after -tax income, it also should be well formatted and easy to understand.
         """,
         "parameters": {
             "decoding_method": "greedy",
@@ -87,11 +87,24 @@ def display_form():
         "Current Tax Rate (%)", min_value=0, max_value=100, value=30, step=1
     )
     investment = st.sidebar.number_input(
-        "Monthly Investments (Local Currency)", min_value=0, step=100
+        "Monthly Investments (Local Currency)", min_value=0, value=100, step=100
     )
-    deductions = st.sidebar.number_input(
-        "Deductions (Local Currency)", min_value=0, step=100
+    deductions = st.sidebar.slider(
+        "Deductions (%)", min_value=0, max_value=100, value=None, step=1
     )
+
+    if earnings is None:
+        st.sidebar.error("Please enter your monthly earnings.")
+    if tax is None:
+        st.sidebar.error("Please set the current tax rate.")
+    if investment is None:
+        st.sidebar.error("Please enter your monthly investments.")
+    if deductions is None:
+        st.sidebar.error("Please enter your deductions.")
+
+    if all([earnings is not None, tax is not None, investment is not None, deductions is not None]):
+        st.write("All required inputs are provided.")
+
     additional_info = st.sidebar.text_area("Additional Information")
 
     if st.sidebar.button("Submit"):
