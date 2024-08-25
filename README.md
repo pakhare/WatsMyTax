@@ -22,7 +22,7 @@
 </details>
 
 ## TRY the prototype
-[WatsAI](https://blank-app-qowx7yjn7zfqu3t5glvzfx.streamlit.app/)
+[WatsAI](https://aitaxoptimizer.streamlit.app/)
 
 
 ## Technology Stack
@@ -30,10 +30,9 @@
 | Technology | Description                 |
 | ---------- | --------------------------- |
 | Python     | Programming Language        |
-| Flask      | Web Framework               |
 | Docker     | Containerization            |
-| MongoDB	    |  |
-|React| Open-source front-end JavaScript library for building user interfaces based on components..|
+| IBM watsonx.ai    | generative AI solution |
+|Streamlit| an open-source Python framework |
 
 ## Features
 
