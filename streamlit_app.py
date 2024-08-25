@@ -36,7 +36,7 @@ def get_tax_strategy(data, iam_token):
                 Investment: {data['investment']}
                 Deductions: {data['deductions']}
 
-            Respond with a structured tax-saving strategy for the user. The output should be well formatted and easy to understand.
+            Respond with a structured tax-saving strategy for the user. The text output should be well formatted and easy to understand.
         """,
         "parameters": {
             "decoding_method": "greedy",
@@ -72,12 +72,11 @@ def display_form():
     st.sidebar.header("User Information")
 
     # Get the list of countries
-    countries = [country[1] for country in countries_for_language('en')]
-
+    countries = [country[1] for country in countries_for_language("en")]
 
     # Form Fields
     country = st.sidebar.selectbox("Country", countries)
-    earnings = st.sidebar.slider(
+    earnings = st.sidebar.number_input(
         "Monthly Earnings (Local Currency)",
         min_value=0,
         max_value=1000000,
