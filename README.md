@@ -51,6 +51,7 @@
 | Sandra Ashipala     | [GitHub](https://github.com/sandramsc) |
 | Hoang Nguyen Van | [GitHub](https://github.com/hoangnv170752) |
 | Prasad Khare | [GitHub](https://github.com/pakhare) |
+| Yash Thakre | [GitHub](https://github.com/yash9904) |
 
 ## License
 
