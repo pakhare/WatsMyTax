@@ -1,3 +1,4 @@
 streamlit
 country_list
-langchain-ibm
+langchain[ibm]
+pandas
