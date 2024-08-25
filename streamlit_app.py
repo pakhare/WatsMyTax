@@ -35,6 +35,7 @@ def get_tax_strategy(data, iam_token):
                 Tax: {data['tax']}
                 Investment: {data['investment']}
                 Deductions: {data['deductions']}
+                {data['additional_info']}
 
             Respond with a structured tax-saving strategy for the user. The text output should be well formatted and easy to understand.
         """,
