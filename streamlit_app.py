@@ -39,7 +39,15 @@ def get_tax_strategy(data, iam_token):
     if response.status_code != 200:
         st.error("Error fetching data from the API")
         return None
-    return response.json().get("output", "No strategy found")
+
+    # Parse the response JSON
+    response_json = response.json()
+
+    # Extract the 'generated_text' from the 'results' list
+    results = response_json.get("results", [])
+    if results:
+        return results[0].get("generated_text", "No strategy found")
+    return "No strategy found"
 
 def display_form():
     st.title("Tax Optimization Strategy")
