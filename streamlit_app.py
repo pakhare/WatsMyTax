@@ -28,7 +28,6 @@ def generate_tax_strategy(data):
             The text output should contain the calculation between before & after-tax income.
             It also should be well formatted (numbered/bulleted/paragraphs/formulae) and easy to understand.
             Make sure to use currency symbols (Example $, €, etc) and percentages where necessary.
-            Mention the Local Currency too.
         """
 
     watsonx_llm = WatsonxLLM(
