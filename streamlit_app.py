@@ -2,12 +2,24 @@
 import streamlit as st
 import requests
 
-# IBM Watsonx.ai API details
+# IBM IAM Token Endpoint and Watsonx.ai API details
+IAM_TOKEN_URL = "https://iam.cloud.ibm.com/identity/token"
 API_URL = "https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2023-05-29"
-# Access API key from Streamlit secrets
-API_KEY = st.secrets["api"]["key"]
 
-def get_tax_strategy(data):
+# Obtain IAM token using API Key
+def get_iam_token(api_key):
+    response = requests.post(
+        IAM_TOKEN_URL,
+        headers={"Content-Type": "application/x-www-form-urlencoded"},
+        data={"grant_type": "urn:ibm:params:oauth:grant-type:apikey", "apikey": api_key}
+    )
+    if response.status_code != 200:
+        st.error("Error obtaining IAM token")
+        return None
+    return response.json().get("access_token")
+
+# Get tax strategy from IBM Watsonx.ai API
+def get_tax_strategy(data, iam_token):
     body = {
         "input": f"Generate a personalized tax-saving strategy for a user based on their financial profile.\n\nInput:\nCountry: {data['country']}\nEarnings: {data['earnings']}\nTax: {data['tax']}\n\nOutput:",
         "parameters": {
@@ -21,7 +33,7 @@ def get_tax_strategy(data):
     headers = {
         "Accept": "application/json",
         "Content-Type": "application/json",
-        "Authorization": f"Bearer sKeQGQ6IsYI1kxERE12cLtXPGFN4Sn461TFTR75xkcym"
+        "Authorization": f"Bearer {iam_token}"
     }
     response = requests.post(API_URL, headers=headers, json=body)
     if response.status_code != 200:
@@ -31,6 +43,9 @@ def get_tax_strategy(data):
 
 def display_form():
     st.title("Tax Optimization Strategy")
+
+    # Read API Key from Streamlit secrets
+    api_key = st.secrets["api"]["key"]
 
     country = st.text_input("Country", "India")
     earnings = st.number_input("Monthly Earnings (INR)", min_value=0)
@@ -46,10 +61,12 @@ def display_form():
             "tax": tax,
             # Include other form data here
         }
-        strategy = get_tax_strategy(data)
-        if strategy:
-            st.write("**Personalized Tax-Saving Strategy:**")
-            st.write(strategy)
+        iam_token = get_iam_token(api_key)
+        if iam_token:
+            strategy = get_tax_strategy(data, iam_token)
+            if strategy:
+                st.write("**Personalized Tax-Saving Strategy:**")
+                st.write(strategy)
 
 if __name__ == "__main__":
     display_form()
