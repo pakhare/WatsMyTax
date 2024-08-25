@@ -40,7 +40,7 @@ def get_tax_strategy(data, iam_token):
         """,
         "parameters": {
             "decoding_method": "greedy",
-            "max_new_tokens": 500,
+            "max_new_tokens": 1000,
             "repetition_penalty": 1,
         },
         "model_id": "ibm/granite-13b-chat-v2",
