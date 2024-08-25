@@ -4,7 +4,8 @@ import requests
 
 # IBM Watsonx.ai API details
 API_URL = "https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2023-05-29"
-API_KEY = "YOUR_ACCESS_TOKEN"  # Replace with your actual API key
+# Access API key from Streamlit secrets
+API_KEY = st.secrets["api"]["key"]
 
 def get_tax_strategy(data):
     body = {
