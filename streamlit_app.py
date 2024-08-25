@@ -22,6 +22,7 @@ def generate_tax_strategy(data):
                 Tax: {data['tax']}
                 Investment: {data['investment']}
                 Deductions: {data['deductions']}
+                {data['additional_info']}
 
             Respond with a structured tax-saving strategy for the user. 
             The text output should contain the calculation between before & after-tax income.
