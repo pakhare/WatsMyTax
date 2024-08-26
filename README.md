@@ -36,6 +36,9 @@
 | Pandas       | Data manipulation and analysis library           |
 | NumPy        | Fundamental package for scientific computing     |
 | HTML/CSS     | For structuring and styling the app's interface   |
+| Docker     | A platform designed to help developers build, share, and run container applications.    |
+| Kubernetes     | An open-source container orchestration system for automating software deployment   |
+| SonarQube     | An open source platform for continuous inspection of code quality.   |
 
 ## Features
 
