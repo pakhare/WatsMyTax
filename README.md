@@ -29,7 +29,7 @@
 
 ## Try the App
 
-You can try the deployed app here: [WatsMyTax](https://aitaxoptimizer.streamlit.app/)
+You can try the deployed app here: [WatsMyTax](https://watsmytax.streamlit.app/)
 
 ## Technology Stack
 
