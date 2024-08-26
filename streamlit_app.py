@@ -11,6 +11,10 @@ from middleware.auth_middleware import auth_middleware
 from auth.auth_handler import getAuthenticatedUser, delete_user
 from utils.utils import countries
 
+st.set_page_config(
+    page_title="WatsMyTax", 
+    page_icon="https://raw.githubusercontent.com/pakhare/WatsMyTax/main/mytax.ico"
+)
 
 os.environ["WATSONX_APIKEY"] = st.secrets["api"]["key"]
 # IBM Watsonx.ai details
@@ -145,7 +149,7 @@ def generate_tax_strategy(data):
 
 
 def display_form():
-    st.title("🧾 Tax Optimization Strategy 🏦")
+    st.title("WatsMyTax 🧾")
 
     st.sidebar.header("User Information")
 
@@ -190,7 +194,18 @@ def display_form():
         st.write("All required inputs are provided.")
 
     additional_info = st.sidebar.text_area("Additional Information")
+    
+    output_placeholder = st.empty()
 
+    # Initial placeholder message in the main area
+    with output_placeholder.container():
+        st.markdown("### Start Optimizing Your Taxes!")
+        st.write("""
+            Fill in the form on the left with your financial details to receive a customized tax-saving strategy.
+            Our AI-powered tool will analyze your inputs and provide you with actionable strategies to minimize your tax burden.
+        """)
+        st.image("https://i.imgur.com/ARAt4O6.png", caption="Optimize Your Taxes", use_column_width=True)
+        
     if st.sidebar.button("Submit"):
         data = {
             "country": country,
@@ -200,6 +215,7 @@ def display_form():
             "deductions": deductions,
             "additional_info": additional_info,
         }
+        output_placeholder.empty()
         try:
             generate_tax_strategy(data)
         except Exception as e:
