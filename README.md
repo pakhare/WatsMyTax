@@ -61,19 +61,26 @@ To run the app locally, follow these steps:
 
    ```bash
    git clone https://github.com/yourusername/WatsMyTax.git
+
    cd WatsMyTax
+   
 
 2. **Install dependencies:**
-Make sure you have Python 3.9 installed. Then install the required Python packages:
 
- ```bash
+Make sure you have Python 3.9 installed. Then install the required Python packages:
+    
+
+```
   pip install -r requirements.txt
+```
 
-3. **Install dependencies:**
-Make sure you have Python 3.9 installed. Then install the required Python packages:
 
- ```bash
- pip install -r requirements.txt
+3. **Run the app:**
+
+
+```
+  streamlit run streamlit_app.py
+```
 
 ### Using Docker
 
@@ -81,13 +88,17 @@ To run the app using Docker, follow these steps:
 
 1. **Build the Docker image**
 
-```bash
- docker build -t watsai:latest .
+```
+   docker build -t watsai:latest .
+```
+
 
 2. **Run the Docker container:**
 
-```bash
- docker run -p 8501:8501 watsmytax:latest
+```
+   docker run -p 8501:8501 watsai:latest
+```
+
 
 ### Deploying with Kubernetes
 
@@ -95,9 +106,11 @@ To run the app using Docker, follow these steps:
 
 2. **Apply the Kubernetes manifests:**
 
-```bash
- kubectl apply -f k8s/deployment.yaml
- kubectl apply -f k8s/service.yaml
+```
+    kubectl apply -f k8s/deployment.yaml
+    kubectl apply -f k8s/service.yaml
+```
+
 
 ## Authors
 
