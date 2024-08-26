@@ -1,0 +1,24 @@
+name: Validate Kubernetes Manifests
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install kubeval
+        run: |
+          curl -sLO https://github.com/instrumenta/kubeval/releases/download/0.15.0/kubeval-linux-amd64
+          chmod +x kubeval-linux-amd64
+          sudo mv kubeval-linux-amd64 /usr/local/bin/kubeval
+
+      - name: Validate Kubernetes manifests
+        run: |
+          kubeval k8s/deployment.yaml
+          kubeval k8s/service.yaml
