@@ -24,7 +24,7 @@
 
 ## Try the App
 
-[WatsMyTax](https://aitaxoptimizer.streamlit.app/)
+[WatsMyTax](https://watsmytax.streamlit.app/)
 
 ## Technology Stack
 
