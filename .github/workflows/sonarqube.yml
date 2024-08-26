@@ -1,4 +1,4 @@
-name: SonarQube Analysis
+name: SonarCloud Analysis
 
 on:
   push:
@@ -9,16 +9,24 @@ on:
       - main
 
 jobs:
-  sonarcloud:
-    name: SonarQube Analysis
+  analyze:
+    name: Analyze with SonarCloud
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
-      - name: SonarQube Scan
-        uses: SonarSource/sonarcloud-github-action@v3.0.0
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        uses: actions/checkout@v3
+
+      - name: SonarCloud Scan
+        uses: sonarsource/sonarcloud-github-action@v3.0.0  # Use the latest version
         with:
-          projectKey: sandramsc_blank-app
-          organization: sandramsc
+          args: >
+            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
+            -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }}
+            -Dsonar.host.url=https://sonarcloud.io
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+
+      - name: Build and test
+        run: |
+          # Add your build and test commands here
+          echo "Building and testing..."
