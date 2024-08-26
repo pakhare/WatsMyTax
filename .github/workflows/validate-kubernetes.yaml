@@ -14,9 +14,20 @@ jobs:
 
       - name: Install kubeval
         run: |
+          # Download kubeval binary
           curl -sLO https://github.com/instrumenta/kubeval/releases/download/0.15.0/kubeval-linux-amd64
+          
+          # Verify download
+          ls -l kubeval-linux-amd64
+          
+          # Make binary executable
           chmod +x kubeval-linux-amd64
+          
+          # Move binary to /usr/local/bin
           sudo mv kubeval-linux-amd64 /usr/local/bin/kubeval
+          
+          # Verify kubeval installation
+          kubeval --version
 
       - name: Validate Kubernetes manifests
         run: |
