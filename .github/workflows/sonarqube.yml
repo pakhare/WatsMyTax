@@ -6,26 +6,16 @@ on:
       - main
   pull_request:
     types: [opened, synchronize, reopened]
-
 jobs:
-  analyze:
-    name: Analyze with SonarCloud
+  sonarcloud:
+    name: SonarCloud
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: SonarCloud Scan
-        uses: sonarsource/sonarcloud-github-action@v3.0.0  # Use the latest version
+      - uses: actions/checkout@v3
         with:
-          args: >
-            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
-            -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }}
-            -Dsonar.host.url=https://sonarcloud.io
-            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-
-      - name: Build and test
-        run: |
-          # Add your build and test commands here
-          echo "Building and testing..."
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
