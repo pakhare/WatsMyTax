@@ -9,13 +9,26 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-    - name: Set up kubectl
-      uses: azure/setup-kubectl@v1
-      with:
-        version: 'latest'
-    - name: Deploy to Kubernetes
-      run: |
-        kubectl apply -f k8s/deployment.yaml --validate=false
-        kubectl apply -f k8s/service.yaml --validate=false
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v1
+        with:
+          version: 'latest'
+          
+      - name: Check for Kubernetes Cluster
+        id: check-cluster
+        run: |
+          if [ -z "$KUBECONFIG" ]; then
+            echo "No Kubernetes cluster detected, skipping deployment."
+            echo "SKIP_K8S_DEPLOY=true" >> $GITHUB_ENV
+          else
+            echo "Kubernetes cluster detected, proceeding with deployment."
+          fi
+
+      - name: Deploy to Kubernetes
+        if: env.SKIP_K8S_DEPLOY != 'true'
+        run: |
+          kubectl apply -f k8s/deployment.yaml --validate=false
+          kubectl apply -f k8s/service.yaml --validate=false
