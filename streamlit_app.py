@@ -144,8 +144,22 @@ def generate_tax_strategy(data):
     st.write_stream(watsonx_llm.stream(chat_prompt))
 
 
+
+st.markdown(
+    """
+    <style>
+    /* Increase the height of the sidebar */
+    .css-17eq0hr { 
+        height: 100vh;  /* Makes the sidebar use the full height of the viewport */
+        overflow-y: auto;  /* Adds a scroll bar if the content overflows */
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 def display_form():
-    st.title("🧾 Tax Optimization Strategy 🏦")
+    st.title("WatsMyTax 🧾")
 
     st.sidebar.header("User Information")
     if st.sidebar.button("Sign Out"):
@@ -194,7 +208,23 @@ def display_form():
         st.write("All required inputs are provided.")
 
     additional_info = st.sidebar.text_area("Additional Information")
+    
+    output_placeholder = st.empty()
 
+    # Initial placeholder message in the main area
+    with output_placeholder.container():
+        st.markdown(
+            """
+            <div style="padding-top: 40px;">
+                <h3>Start Optimizing Your Taxes!</h3>
+                <p>Fill in the form on the left with your financial details to receive a customized tax-saving strategy.
+                Our AI-powered tool will analyze your inputs and provide you with actionable strategies to minimize your tax burden.</p>
+                <img src="https://i.imgur.com/ARAt4O6.png" alt="Optimize Your Taxes" style="width:100%;">
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+        
     if st.sidebar.button("Submit"):
         data = {
             "country": country,
@@ -204,6 +234,7 @@ def display_form():
             "deductions": deductions,
             "additional_info": additional_info,
         }
+        output_placeholder.empty()
         try:
             generate_tax_strategy(data)
         except Exception as e:
