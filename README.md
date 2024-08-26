@@ -14,10 +14,14 @@
 <summary>WatsMyTax</summary>
 
 - [Application Description](#application-description)
-- [Table of Contents](#table-of-contents)
 - [Try the App](#try-the-app)
 - [Technology Stack](#technology-stack)
 - [Features](#features)
+- [Usage](#usage)
+  - [Running Locally](#running-locally)
+  - [Using Docker](#using-docker)
+  - [Deploying with Kubernetes](#deploying-with-kubernetes)
+  - [Continuous Integration with SonarQube](#continuous-integration-with-sonarqube)
 - [Authors](#authors)
 - [License](#license)
 
@@ -25,7 +29,7 @@
 
 ## Try the App
 
-[WatsMyTax](https://aitaxoptimizer.streamlit.app/)
+You can try the deployed app here: [WatsMyTax](https://aitaxoptimizer.streamlit.app/)
 
 ## Technology Stack
 
@@ -36,9 +40,9 @@
 | Pandas       | Data manipulation and analysis library           |
 | NumPy        | Fundamental package for scientific computing     |
 | HTML/CSS     | For structuring and styling the app's interface   |
-| Docker     | A platform designed to help developers build, share, and run container applications.    |
-| Kubernetes     | An open-source container orchestration system for automating software deployment   |
-| SonarQube     | An open source platform for continuous inspection of code quality.   |
+| Docker       | A platform designed to help developers build, share, and run container applications.    |
+| Kubernetes   | An open-source container orchestration system for automating software deployment   |
+| SonarQube    | An open-source platform for continuous inspection of code quality.   |
 
 ## Features
 
@@ -46,6 +50,54 @@
 - **User-Friendly Interface**:<br> Input fields allow users to easily provide information such as earnings, tax rates, and investments, making tax optimization accessible.
 - **Real-Time Feedback**:<br> The app offers immediate feedback and recommendations to help users maximize their tax savings.
 - **Cross-Platform Compatibility**:<br> WatsMyTax is designed to work seamlessly across different devices, ensuring accessibility and ease of use.
+
+## Usage
+
+### Running Locally
+
+To run the app locally, follow these steps:
+
+1. **Clone the repository:**
+
+   ```bash
+   git clone https://github.com/yourusername/WatsMyTax.git
+   cd WatsMyTax
+
+2. **Install dependencies:**
+Make sure you have Python 3.9 installed. Then install the required Python packages:
+
+ ```bash
+  pip install -r requirements.txt
+
+3. **Install dependencies:**
+Make sure you have Python 3.9 installed. Then install the required Python packages:
+
+ ```bash
+ pip install -r requirements.txt
+
+### Using Docker
+
+To run the app using Docker, follow these steps:
+
+1. **Build the Docker image**
+
+```bash
+ docker build -t watsai:latest .
+
+2. **Run the Docker container:**
+
+```bash
+ docker run -p 8501:8501 watsmytax:latest
+
+### Deploying with Kubernetes
+
+1. **Ensure you have a Kubernetes cluster available.**
+
+2. **Apply the Kubernetes manifests:**
+
+```bash
+ kubectl apply -f k8s/deployment.yaml
+ kubectl apply -f k8s/service.yaml
 
 ## Authors
 
@@ -58,5 +110,4 @@
 
 ## License
 
-[![GitLicense](https://img.shields.io/badge/License-MIT-lime.svg)](https://github.com/yourusername/WatsAI/blob/main/LICENSE) <!-- Update link with your repo -->
-
+[![GitLicense](https://img.shields.io/badge/License-Apache-lime.svg)](https://github.com/pakhare/WatsMyTax/blob/main/LICENSE)
