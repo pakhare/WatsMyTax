@@ -64,14 +64,14 @@ To run the app locally, follow these steps:
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/yourusername/WatsMyTax.git
+   git clone https://github.com/pakhare/WatsMyTax.git
 
    cd WatsMyTax
    
 
 2. **Install dependencies:**
 
-Make sure you have Python 3.9 installed. Then install the required Python packages:
+Make sure you have Python 3.12 installed. Then install the required Python packages:
     
 
 ```
