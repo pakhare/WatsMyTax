@@ -39,10 +39,10 @@
 
 ## Features
 
-- **Personalized Tax-Saving Strategy**:<br> WatsAI generates tailored tax-saving strategies based on user input, optimizing tax liability.
+- **Personalized Tax-Saving Strategy**:<br> WatsMyTax generates tailored tax-saving strategies based on user input, optimizing tax liability.
 - **User-Friendly Interface**:<br> Input fields allow users to easily provide information such as earnings, tax rates, and investments, making tax optimization accessible.
 - **Real-Time Feedback**:<br> The app offers immediate feedback and recommendations to help users maximize their tax savings.
-- **Cross-Platform Compatibility**:<br> WatsAI is designed to work seamlessly across different devices, ensuring accessibility and ease of use.
+- **Cross-Platform Compatibility**:<br> WatsMyTax is designed to work seamlessly across different devices, ensuring accessibility and ease of use.
 
 ## Authors
 
