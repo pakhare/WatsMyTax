@@ -1,7 +1,9 @@
+import json
 import os
 
-import requests
 import streamlit as st
+from langchain_core.output_parsers import StrOutputParser
+from langchain_core.prompts import PromptTemplate
 from langchain_ibm import WatsonxLLM
 from auth.signin import show_signin_page
 from auth.signup import show_signup_page
@@ -16,24 +18,117 @@ MODEL = "ibm/granite-13b-chat-v2"
 API_URL = "https://us-south.ml.cloud.ibm.com"
 
 
+def generate_tax_expressions(data):
+    task_prompt = """
+        Generate a personalized tax-saving calculations for a user based on their financial profile. 
+        The result should only be a list of JSON objects containing the following fields:
+
+        expression: The calculation expression (the numbers with arithmetic operations).
+        description: The arithmetic description of the calculation in plain English.
+        currency: The currency symbol used in the calculation for the country. Should change for different countries.
+
+        Example Input:
+            Country: India
+            Earnings: 500000 per month
+            Tax: 10%
+            Investment: 100000 per month
+            Deductions: 20000
+            Additional Information: The user is a salaried employee.
+        
+        Example raw JSON output (these formulas are just examples and may not be accurate, the length of the list can vary):
+        [
+            {
+                "expression": "500000 * 0.10",
+                "description": "Tax Amount = Income Bracket * Tax Rate",
+                "currency": "₹"
+            },
+            {
+                "expression": "500000 - (500000 * 0.10)",
+                "description": "After Tax Income = Income Bracket - Tax Amount",
+                "currency": "₹"
+            }
+        ]
+    """
+    prompt = f"""
+        Input:  
+            Country: {data["country"]}
+            Earnings: {data["earnings"]} per month
+            Tax: {data["tax"]}%
+            Investment: {data["investment"]} per month
+            Deductions: {data["deductions"]}
+            Additional Information: {data["additional_info"]}
+
+        Now, ONLY generate the list of JSONs as instructed above using the input and nothing else. 
+        Do not explain anything and do not share codes just provide the JSON output.
+    """
+    prompt = task_prompt + prompt
+
+    watsonx_llm = WatsonxLLM(
+        model_id="ibm/granite-13b-instruct-v2",
+        project_id=st.secrets["project"]["id"],
+        url="https://us-south.ml.cloud.ibm.com",
+        params={
+            "decoding_method": "greedy",
+            "max_new_tokens": 1000,
+            "repetition_penalty": 1,
+        },
+    )
+
+    response = watsonx_llm.generate([prompt])
+    text = response.generations[0][0].text
+    print(text)
+
+    text = text[text.find("[") : text.find("]") + 1]
+    res_dict = json.loads(text)
+    for d in res_dict:
+        try:
+            d["result"] = eval(d["expression"])
+        except:
+            d["result"] = "No result available"
+
+    result = [
+        r["description"] + " = " + r["expression"] + " = " + str(r["result"])
+        for r in res_dict
+    ]
+    result = "\n".join(result)
+    print(result)
+    return result + " The currency is " + res_dict[0]["currency"]
+
+
 # Get tax strategy from IBM Watsonx.ai API
 def generate_tax_strategy(data):
-    prompt = f"""
-            Generate a personalized tax-saving strategy for a user based on their financial profile. 
-            Assume the numbers to be in Local Currency.
-            Input:  
-                Country: {data['country']}
-                Earnings: {data['earnings']}
-                Tax: {data['tax']}
-                Investment: {data['investment']}
-                Deductions: {data['deductions']}
-                {data['additional_info']}
+    tax_results = generate_tax_expressions(data)
 
-            Respond with a structured tax-saving strategy for the user. 
-            The text output should contain the calculation between before & after-tax income.
-            It also should be well formatted (numbered/bulleted/paragraphs/formulae) and easy to understand.
-            Make sure to use currency symbols (Example $, €, etc) and percentages where necessary.
+    prompt = """
+            Generate a personalized tax-saving strategy for a user based on their financial profile. 
+            
+            Input:  
+                Country: {country}
+                Earnings: {earnings} per month
+                Tax: {tax}%
+                Investment: {investment} per month
+                Deductions: {deductions}
+                Additional Information: {additional_info}
+
+            Here are the tax-saving calculations for the user:
+            {tax_results}
+            First, show and explain to the user these calculations.
+            Second, provide a tax-saving strategy to the user beyond the calculations as well.
+            Make sure the results are well formatted (numbered, bulleted, formulae, etc) and easy to understand for the user 
+            and don't change paragraphs and use escape characters where needed (ex. dollar symbol).
+
         """
+
+    chat_prompt = PromptTemplate.from_template(template=prompt)
+    chat_prompt = chat_prompt.format(
+        country=data["country"],
+        earnings=data["earnings"],
+        tax=data["tax"],
+        investment=data["investment"],
+        deductions=data["deductions"],
+        additional_info=data["additional_info"],
+        tax_results=tax_results,
+    )
 
     watsonx_llm = WatsonxLLM(
         model_id=MODEL,
@@ -45,7 +140,8 @@ def generate_tax_strategy(data):
             "repetition_penalty": 1,
         },
     )
-    st.write_stream(watsonx_llm.stream(prompt))
+    watsonx_llm = watsonx_llm | StrOutputParser()
+    st.write_stream(watsonx_llm.stream(chat_prompt))
 
 
 def display_form():
