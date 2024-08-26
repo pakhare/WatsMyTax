@@ -1,5 +1,6 @@
 import streamlit as st
 from auth.auth_handler import authenticate_user
+from database import get_db
 
 def show_signin_page():
     st.title("Sign In")
