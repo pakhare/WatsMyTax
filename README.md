@@ -1,17 +1,17 @@
 <!-- PROJECT TITLE -->
-<h1 align="center">WatsAI</h1>
+<h1 align="center">WatsMyTax</h1>
 <div id="header" align="center">
 </div>
 <h2 align="center">
  Description
 </h2>
-<p align="center"><strong>Introducing WatsAI:</strong>
-   WatsAI is a powerful tax optimization tool designed to help individuals maximize their tax savings by providing personalized strategies based on their financial information. With an intuitive user interface, WatsAI simplifies the process of optimizing tax liability, making it accessible to users across various financial backgrounds.</p>
+<p align="center"><strong>Introducing WatsMyTax:</strong>
+   WatsMyTax is a powerful tax optimization tool designed to help individuals maximize their tax savings by providing personalized strategies based on their financial information. With an intuitive user interface, WatsMyTax simplifies the process of optimizing tax liability, making it accessible to users across various financial backgrounds.</p>
 
 ## Table of Contents
 
 <details>
-<summary>WatsAI</summary>
+<summary>WatsMyTax</summary>
 
 - [Application Description](#application-description)
 - [Table of Contents](#table-of-contents)
@@ -25,7 +25,7 @@
 
 ## Try the App
 
-[WatsAI](https://aitaxoptimizer.streamlit.app/)
+[WatsMyTax](https://aitaxoptimizer.streamlit.app/)
 
 ## Technology Stack
 
