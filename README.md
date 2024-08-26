@@ -31,6 +31,10 @@
 
 You can try the deployed app here: [WatsMyTax](https://watsmytax.streamlit.app/)
 
+## Try the Chrome extention
+
+extensions ID - chrome: mmoakbagkgplllabjjgnjieoikbplmdn 
+
 ## Technology Stack
 
 | Technology   | Description                                      |
