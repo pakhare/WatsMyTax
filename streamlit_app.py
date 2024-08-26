@@ -2,15 +2,20 @@ import json
 import os
 
 import streamlit as st
-from country_list import countries_for_language
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import PromptTemplate
 from langchain_ibm import WatsonxLLM
+from auth.signin import show_signin_page
+from auth.signup import show_signup_page
+from middleware.auth_middleware import auth_middleware
+from auth.auth_handler import getAuthenticatedUser
+from utils.utils import countries
+
 
 os.environ["WATSONX_APIKEY"] = st.secrets["api"]["key"]
-# IBM IAM Token Endpoint and Watsonx.ai API details
-IAM_TOKEN_URL = "https://iam.cloud.ibm.com/identity/token"
-API_URL = "https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2023-05-29"
+# IBM Watsonx.ai details
+MODEL = "ibm/granite-13b-chat-v2"
+API_URL = "https://us-south.ml.cloud.ibm.com"
 
 
 def generate_tax_expressions(data):
@@ -126,9 +131,9 @@ def generate_tax_strategy(data):
     )
 
     watsonx_llm = WatsonxLLM(
-        model_id="ibm/granite-13b-chat-v2",
+        model_id=MODEL,
         project_id=st.secrets["project"]["id"],
-        url="https://us-south.ml.cloud.ibm.com",
+        url=API_URL,
         params={
             "decoding_method": "greedy",
             "max_new_tokens": 1000,
@@ -143,12 +148,15 @@ def display_form():
     st.title("🧾 Tax Optimization Strategy 🏦")
 
     st.sidebar.header("User Information")
+    if st.sidebar.button("Sign Out"):
+            st.session_state['authenticated'] = False
+            st.session_state['page'] = 'signin'
+            st.rerun()
 
-    # Get the list of countries
-    countries = [country[1] for country in countries_for_language("en")]
+    auth_user = getAuthenticatedUser()
 
     # Form Fields
-    country = st.sidebar.selectbox("Country", countries)
+    country = st.sidebar.selectbox("Country", countries, index=countries.index(auth_user['country']) if auth_user else 0)
     earnings = st.sidebar.number_input(
         "Monthly Earnings (Local Currency)",
         min_value=0,
@@ -201,6 +209,23 @@ def display_form():
         except Exception as e:
             st.error(f"Error: {e}")
 
+def main():
+    # Initialize session state for page navigation
+    if 'page' not in st.session_state:
+        st.session_state['page'] = 'signin'
+
+    # Page routing
+    if st.session_state['page'] == 'signin':
+        show_signin_page()
+    elif st.session_state['page'] == 'signup':
+        show_signup_page()
+    else:
+        auth_middleware()   # Apply middleware to check authentication - 
+                            # Will redirect automatically to signup if not authenticated
+        # st.title("Dashboard")
+        # st.write(f"Welcome, {st.session_state['username']}!")
+        display_form()
+
 
 if __name__ == "__main__":
-    display_form()
+    main()
