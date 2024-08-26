@@ -13,7 +13,6 @@
 <details>
 <summary>WatsMyTax</summary>
 
-- [Application Description](#application-description)
 - [Table of Contents](#table-of-contents)
 - [Try the App](#try-the-app)
 - [Technology Stack](#technology-stack)
@@ -51,6 +50,7 @@
 
 | Name               | Link                                      |
 | ------------------ | ----------------------------------------- |
+| Ahmed Tarek        | [GitHub](https://github.com/ahmedtarekabd) |
 | Sandra Ashipala     | [GitHub](https://github.com/sandramsc) |
 | Hoang Nguyen Van | [GitHub](https://github.com/hoangnv170752) |
 | Prasad Khare | [GitHub](https://github.com/pakhare) |

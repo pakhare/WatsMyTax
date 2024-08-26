@@ -1,6 +1,7 @@
 import streamlit as st
 from auth.auth_handler import register_user
 from utils.utils import countries
+from database import get_db
 
 def show_signup_page():
     st.title("Sign Up")
@@ -14,7 +15,7 @@ def show_signup_page():
         if password != confirm_password:
             st.error("Passwords do not match")
         else:
-            success, message = register_user(username, password, country)
+            success, message = register_user({"username": username, "password": password,"country": country})
             if success:
                 st.success(message)
                 st.session_state['page'] = 'signin'

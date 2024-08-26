@@ -8,7 +8,7 @@ from langchain_ibm import WatsonxLLM
 from auth.signin import show_signin_page
 from auth.signup import show_signup_page
 from middleware.auth_middleware import auth_middleware
-from auth.auth_handler import getAuthenticatedUser
+from auth.auth_handler import getAuthenticatedUser, delete_user
 from utils.utils import countries
 
 
@@ -148,10 +148,6 @@ def display_form():
     st.title("🧾 Tax Optimization Strategy 🏦")
 
     st.sidebar.header("User Information")
-    if st.sidebar.button("Sign Out"):
-            st.session_state['authenticated'] = False
-            st.session_state['page'] = 'signin'
-            st.rerun()
 
     auth_user = getAuthenticatedUser()
 
@@ -225,6 +221,14 @@ def main():
         # st.title("Dashboard")
         # st.write(f"Welcome, {st.session_state['username']}!")
         display_form()
+        if st.sidebar.button("Sign Out"):
+            st.session_state['authenticated'] = False
+            st.session_state['page'] = 'signin'
+            st.rerun()
+        if st.sidebar.button("Delete Account", help="This will delete your account and all associated data.", type="primary"):
+                delete_user(st.session_state['user']['username'])
+                st.session_state['page'] = 'signin'
+                st.rerun()
 
 
 if __name__ == "__main__":
