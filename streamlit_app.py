@@ -6,9 +6,9 @@ from country_list import countries_for_language
 from langchain_ibm import WatsonxLLM
 
 os.environ["WATSONX_APIKEY"] = st.secrets["api"]["key"]
-# IBM IAM Token Endpoint and Watsonx.ai API details
-IAM_TOKEN_URL = "https://iam.cloud.ibm.com/identity/token"
-API_URL = "https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2023-05-29"
+# IBM Watsonx.ai details
+MODEL = "ibm/granite-13b-chat-v2"
+API_URL = "https://us-south.ml.cloud.ibm.com"
 
 
 # Get tax strategy from IBM Watsonx.ai API
@@ -31,9 +31,9 @@ def generate_tax_strategy(data):
         """
 
     watsonx_llm = WatsonxLLM(
-        model_id="ibm/granite-13b-chat-v2",
+        model_id=MODEL,
         project_id=st.secrets["project"]["id"],
-        url="https://us-south.ml.cloud.ibm.com",
+        url=API_URL,
         params={
             "decoding_method": "greedy",
             "max_new_tokens": 1000,
