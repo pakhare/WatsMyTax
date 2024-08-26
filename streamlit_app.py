@@ -11,6 +11,10 @@ from middleware.auth_middleware import auth_middleware
 from auth.auth_handler import getAuthenticatedUser, delete_user
 from utils.utils import countries
 
+st.set_page_config(
+    page_title="WatsMyTax", 
+    page_icon="https://raw.githubusercontent.com/pakhare/WatsMyTax/main/mytax.ico"
+)
 
 os.environ["WATSONX_APIKEY"] = st.secrets["api"]["key"]
 # IBM Watsonx.ai details
