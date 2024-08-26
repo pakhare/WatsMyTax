@@ -204,6 +204,16 @@ def display_form():
             generate_tax_strategy(data)
         except Exception as e:
             st.error(f"Error: {e}")
+    
+    if st.sidebar.button("Sign Out"):
+        st.session_state['authenticated'] = False
+        st.session_state['page'] = 'signin'
+        st.rerun()
+    
+    if st.sidebar.button("Delete Account", help="This will delete your account and all associated data.", type="primary"):
+            delete_user(st.session_state['user']['username'])
+            st.session_state['page'] = 'signin'
+            st.rerun()
 
 def main():
     # Initialize session state for page navigation
@@ -221,14 +231,6 @@ def main():
         # st.title("Dashboard")
         # st.write(f"Welcome, {st.session_state['username']}!")
         display_form()
-        if st.sidebar.button("Sign Out"):
-            st.session_state['authenticated'] = False
-            st.session_state['page'] = 'signin'
-            st.rerun()
-        if st.sidebar.button("Delete Account", help="This will delete your account and all associated data.", type="primary"):
-                delete_user(st.session_state['user']['username'])
-                st.session_state['page'] = 'signin'
-                st.rerun()
 
 
 if __name__ == "__main__":
