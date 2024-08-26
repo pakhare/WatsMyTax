@@ -1,0 +1,105 @@
+<!--
+ Copyright 2023 Google LLC
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+  -->
+
+  <!doctype html>
+  <html>
+    <head>
+      <title>WatsMyTax</title>
+      <style>
+        #loginForm {
+          width: 300px;
+          margin: 50px auto;
+          padding: 20px;
+          border: 1px solid #ccc;
+          border-radius: 10px;
+          background-color: #f9f9f9;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #loginForm img.logo {
+          display: block;
+          margin: 0 auto 20px;
+          width: 100px;
+        }
+
+        #loginForm h2 {
+          text-align: center;
+          margin-bottom: 20px;
+          color: #333;
+          font-family: 'Arial', sans-serif;
+        }
+
+        #loginForm label {
+          display: block;
+          margin-bottom: 8px;
+          font-weight: bold;
+          color: #555;
+        }
+
+        #loginForm input[type="text"],
+        #loginForm input[type="password"],
+        #loginForm input[type="submit"] {
+          width: 100%;
+          padding: 10px;
+          margin-bottom: 15px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          box-sizing: border-box;
+          font-size: 14px;
+        }
+
+        #loginForm button[type="submit"] {
+          width: 100%;
+          padding: 10px;
+          background-color: #4CAF50;
+          color: white;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          font-size: 16px;
+        }
+
+        #loginForm button[type="submit"]:hover {
+          background-color: #45a049;
+        }
+
+      </style>
+      <script src="popup.js" type="module"></script>
+    </head>
+    <body>
+      <div id="loginForm">
+        <img src="./logo-png.png" alt="Logo" class="logo">
+        <h2>Register - WatsMyTax</h2>
+        <form id="form">
+          <label for="username">Username:</label>
+          <input type="text" id="username" name="username" required><br>
+      
+          <label for="password">Password:</label>
+          <input type="password" id="password" name="password" required><br>
+      
+          <label for="country">Country:</label>
+          <input type="text" id="country" name="country" required><br>
+      
+          <button type="submit">Register</button>
+        </form>
+        <div id="welcomeScreen" style="display:block;">
+          <h2>Welcome!</h2>
+          <h3><a href="https://aitaxoptimizer.streamlit.app/" target="_blank">Live demo: https://aitaxoptimizer.streamlit.app/</a></h3>
+        </div>
+      </div>
+    </body>
+  </html>
+  

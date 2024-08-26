@@ -25,6 +25,7 @@
 ## Try the App
 
 [WatsMyTax](https://aitaxoptimizer.streamlit.app/)
+Or get from extensions ID - chrome: mmoakbagkgplllabjjgnjieoikbplmdn 
 
 ## Technology Stack
 
