@@ -1,16 +1,24 @@
 import json
 import os
+from typing import Iterable
 
 import streamlit as st
+from langchain_core.messages.ai import AIMessageChunk
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import PromptTemplate
+from langchain_core.runnables import RunnableGenerator
 from langchain_ibm import WatsonxLLM
+
+from auth.auth_handler import delete_user, getAuthenticatedUser
 from auth.signin import show_signin_page
 from auth.signup import show_signup_page
 from middleware.auth_middleware import auth_middleware
-from auth.auth_handler import getAuthenticatedUser, delete_user
 from utils.utils import countries
 
+st.set_page_config(
+    page_title="WatsMyTax",
+    page_icon="https://raw.githubusercontent.com/pakhare/WatsMyTax/main/mytax.ico",
+)
 
 os.environ["WATSONX_APIKEY"] = st.secrets["api"]["key"]
 # IBM Watsonx.ai details
@@ -92,7 +100,14 @@ def generate_tax_expressions(data):
     ]
     result = "\n".join(result)
     print(result)
-    return result + " The currency is " + res_dict[0]["currency"]
+    return result
+
+
+def streaming_parse(chunks: Iterable[AIMessageChunk]) -> Iterable[str]:
+    for chunk in chunks:
+        # Replace $ with \$
+        modified_content = chunk.replace("$", r"\$")
+        yield modified_content
 
 
 # Get tax strategy from IBM Watsonx.ai API
@@ -112,11 +127,11 @@ def generate_tax_strategy(data):
 
             Here are the tax-saving calculations for the user:
             {tax_results}
-            First, show and explain to the user these calculations.
-            Second, provide a tax-saving strategy to the user beyond the calculations as well.
+            Assume local currency.
+            First, show me and explain to me these calculations.
+            Then, provide a tax-saving strategy beyond these calculations as well.
             Make sure the results are well formatted (numbered, bulleted, formulae, etc) and easy to understand for the user 
             and don't change paragraphs and use escape characters where needed (ex. dollar symbol).
-
         """
 
     chat_prompt = PromptTemplate.from_template(template=prompt)
@@ -140,19 +155,24 @@ def generate_tax_strategy(data):
             "repetition_penalty": 1,
         },
     )
-    watsonx_llm = watsonx_llm | StrOutputParser()
+    streaming_parser = RunnableGenerator(streaming_parse)
+    watsonx_llm = watsonx_llm | StrOutputParser() | streaming_parser
     st.write_stream(watsonx_llm.stream(chat_prompt))
 
 
 def display_form():
-    st.title("🧾 Tax Optimization Strategy 🏦")
+    st.title("WatsMyTax 🧾")
 
     st.sidebar.header("User Information")
 
     auth_user = getAuthenticatedUser()
 
     # Form Fields
-    country = st.sidebar.selectbox("Country", countries, index=countries.index(auth_user['country']) if auth_user else 0)
+    country = st.sidebar.selectbox(
+        "Country",
+        countries,
+        index=countries.index(auth_user["country"]) if auth_user else 0,
+    )
     earnings = st.sidebar.number_input(
         "Monthly Earnings (Local Currency)",
         min_value=0,
@@ -191,6 +211,23 @@ def display_form():
 
     additional_info = st.sidebar.text_area("Additional Information")
 
+    output_placeholder = st.empty()
+
+    # Initial placeholder message in the main area
+    with output_placeholder.container():
+        st.markdown("### Start Optimizing Your Taxes!")
+        st.write(
+            """
+            Fill in the form on the left with your financial details to receive a customized tax-saving strategy.
+            Our AI-powered tool will analyze your inputs and provide you with actionable strategies to minimize your tax burden.
+        """
+        )
+        st.image(
+            "https://i.imgur.com/ARAt4O6.png",
+            caption="Optimize Your Taxes",
+            use_column_width=True,
+        )
+
     if st.sidebar.button("Submit"):
         data = {
             "country": country,
@@ -200,6 +237,7 @@ def display_form():
             "deductions": deductions,
             "additional_info": additional_info,
         }
+        output_placeholder.empty()
         try:
             generate_tax_strategy(data)
         except Exception as e:
@@ -215,19 +253,20 @@ def display_form():
             st.session_state['page'] = 'signin'
             st.rerun()
 
+
 def main():
     # Initialize session state for page navigation
-    if 'page' not in st.session_state:
-        st.session_state['page'] = 'signin'
+    if "page" not in st.session_state:
+        st.session_state["page"] = "signin"
 
     # Page routing
-    if st.session_state['page'] == 'signin':
+    if st.session_state["page"] == "signin":
         show_signin_page()
-    elif st.session_state['page'] == 'signup':
+    elif st.session_state["page"] == "signup":
         show_signup_page()
     else:
-        auth_middleware()   # Apply middleware to check authentication - 
-                            # Will redirect automatically to signup if not authenticated
+        auth_middleware()  # Apply middleware to check authentication -
+        # Will redirect automatically to signup if not authenticated
         # st.title("Dashboard")
         # st.write(f"Welcome, {st.session_state['username']}!")
         display_form()
