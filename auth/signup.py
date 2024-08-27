@@ -22,3 +22,7 @@ def show_signup_page():
                 st.rerun()
             else:
                 st.error(message)
+    st.write("Already have an account?")
+    if st.button("Go to Sign In"):
+        st.session_state['page'] = 'signin'
+        st.rerun()
