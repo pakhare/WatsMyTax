@@ -1,5 +1,7 @@
 <!-- PROJECT TITLE -->
 <h1 align="center">WatsMyTax</h1>
+<h2 align="center">GLOBAL FINALIST - Generative AI Hackathon with IBM watsonx</h2>
+
 <div id="header" align="center">
 </div>
 <h2 align="center">
